@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# FinancePro — Expense Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack personal finance tracker built with React, Node.js, Express, and PostgreSQL. Track daily expenses, set monthly budgets, visualize spending patterns, and export reports.
 
-## Available Scripts
+**Live Demo:** https://financepro-tracker.netlify.app
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **JWT Authentication** — Secure login/register with token-based auth
+- **Expense CRUD** — Add, edit, delete expenses with category tagging
+- **Dashboard Charts** — Pie chart (category breakdown) + Bar chart (6-month trend) via Recharts
+- **Budget Tracking** — Set monthly budget, get visual alerts at 80% and 100%
+- **Smart Filters** — Filter by month, year, category, or search by title
+- **CSV Export** — Download monthly expenses as a spreadsheet
+- **Responsive Design** — Works on mobile and desktop
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Tailwind CSS, Recharts |
+| Backend | Node.js, Express.js |
+| Database | PostgreSQL |
+| Auth | JWT (JSON Web Tokens) |
+| Deployment | Netlify (frontend), Render (backend) |
+| Security | Helmet.js, express-rate-limit, bcryptjs |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `npm run build`
+```
+expense-tracker-frontend/
+├── src/
+│   ├── components/
+│   │   ├── Dashboard.jsx      # Summary cards + charts
+│   │   ├── FilterBar.jsx      # Search, month/category filters + CSV export
+│   │   ├── EmptyState.jsx     # Empty state UI
+│   │   └── ExpenseForm.jsx    # Add/edit expense modal
+│   ├── pages/
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   └── Home.jsx
+│   ├── services/
+│   │   └── api.js             # Axios instance with JWT interceptor
+│   └── App.js
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/mohitverma2004/expense-tracker-frontend
+cd expense-tracker-frontend
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a `.env` file:
+```
+REACT_APP_API_URL=https://expense-tracker-api-wrxh.onrender.com
+```
 
-### `npm run eject`
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## API Endpoints
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/auth/register | Register new user |
+| POST | /api/auth/login | Login, returns JWT |
+| GET | /api/expenses | Get all expenses (filterable) |
+| POST | /api/expenses | Add new expense |
+| PUT | /api/expenses/:id | Edit expense |
+| DELETE | /api/expenses/:id | Delete expense |
+| GET | /api/expenses/summary | Category totals + trend data |
+| GET | /api/expenses/export | Download as CSV |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Backend Repo
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+https://github.com/mohitverma2004/expense-tracker-backend
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Built by **Mohit Verma** — PEC Chandigarh, CSE
