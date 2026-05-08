@@ -1,36 +1,31 @@
-import axios from 'axios';
+// src/services/api.js
+// Place this file at: expense-tracker-frontend/src/services/api.js
 
-const API_URL = 'https://expense-tracker-api-wrxh.onrender.com/api';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.REACT_APP_API_URL || "https://expense-tracker-api-wrxh.onrender.com",
+  timeout: 10000,
 });
 
+// Attach JWT token to every request automatically
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  const token = localStorage.getItem("token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-export const authAPI = {
-  register: (data) => api.post('/auth/register', data),
-  login: (data) => api.post('/auth/login', data),
-  getMe: () => api.get('/auth/me'),
-};
-
-export const expenseAPI = {
-  getAll: (params) => api.get('/expenses', { params }),
-  create: (data) => api.post('/expenses', data),
-  update: (id, data) => api.put(`/expenses/${id}`, data),
-  delete: (id) => api.delete(`/expenses/${id}`),
-  getSummary: (params) => api.get('/expenses/summary', { params }),
-  getMonthlyTotal: (params) => api.get('/expenses/monthly-total', { params }),
-  getBudgetStatus: (params) => api.get('/expenses/budget-status', { params }),
-  updateBudget: (data) => api.put('/expenses/budget', data),
-  getTrends: () => api.get('/expenses/trends'),
-  exportCSV: (params) => api.get('/expenses/export', { params, responseType: 'blob' }),
-};
+// Auto logout if token expires
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;
